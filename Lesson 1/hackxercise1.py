@@ -5,7 +5,7 @@ from Root.pswd import real_password
 
 PASSWORD_LENGTH = 4
 SECONDS_TO_CHECK_ONE_DIGIT = 0.1
-POSSIBLE_VALUES_FOR_DIGIT = [0,1,2,3,4,5,6,7,8,9]
+POSSIBLE_VALUES_FOR_DIGIT = ["0","1","2","3","4","5","6","7","8","9"]
 
 def check_password(password): # Don't change it
     if len(password) != len(real_password):
@@ -16,6 +16,19 @@ def check_password(password): # Don't change it
             return False
     return True
 
+def check_combination(password, index, digit):
+    password[index] = digit
+    return check_password("".join(password))
+
 def crack_password():
-    pass # return cracked password
-    
+    password = ["0", "0", "0", "0"]
+    for index in range(PASSWORD_LENGTH):
+        for digit in POSSIBLE_VALUES_FOR_DIGIT:
+            start_time = time.time()
+            result = check_combination(password, index, digit)
+            end_time = time.time()
+            total_time = end_time - start_time
+            if result == True:
+                return "".join(password)
+            if (SECONDS_TO_CHECK_ONE_DIGIT * (index + 2)) <= total_time <= (SECONDS_TO_CHECK_ONE_DIGIT * (index + 3)):
+                break
