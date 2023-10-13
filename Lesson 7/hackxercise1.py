@@ -14,7 +14,7 @@ class Alice:
         return pow(g, self.a) % p
 
     def compute_secret(self, gb):
-        pass # TODO
+        return pow(gb, self.a) % p
 
 
 class Bob:
@@ -26,7 +26,7 @@ class Bob:
         return pow(g, self.b) % p
 
     def compute_secret(self, ga):
-        pass # TODO
+        return pow(ga, self.b) % p
 
 
 alice = Alice()
